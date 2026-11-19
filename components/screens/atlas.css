@@ -1,0 +1,369 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..600&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
+/*
+ * Scoped stylesheet for Code Blue 3D Anatomy Atlas (`AtlasScreen.tsx`).
+ * - Locks the exact fonts, text colors (#d98a96 rose titles, #f1f5f9 / #0f172a primary text, #94a3b8 / #334155 secondary text),
+ *   and panel shapes across the entire Atlas.
+ * - Applies the original Code Blue website glassmorphic theme (`glass-theme.css` + `SkyBackground`) literally everywhere
+ *   in the Atlas in both Night (Dark) and Day (Light) modes!
+ */
+
+.atlas-root {
+  --atlas-title: #d98a96;
+  --atlas-text-primary: #f1f5f9;
+  --atlas-text-secondary: #94a3b8;
+  font-family: 'Plus Jakarta Sans', 'DM Sans', 'IBM Plex Sans Arabic', var(--font-inter), 'Inter', var(--font-cairo), 'Cairo', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+  letter-spacing: -0.01em;
+  background: transparent !important;
+}
+
+.atlas-root .font-mono,
+.atlas-root code,
+.atlas-root kbd,
+.atlas-root pre {
+  font-family: 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace !important;
+  letter-spacing: 0;
+}
+
+/* Thin, razor-sharp arrow pointer cursor for selecting structures */
+.atlas-root canvas {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 22 22' fill='none'%3E%3Cpath d='M2 2L8.2 17.8L10.9 11.6L17.2 8.9L2 2Z' fill='%230f172a' stroke='%23ece7e0' stroke-width='1.35' stroke-linejoin='round'/%3E%3C/svg%3E") 2 2, default !important;
+  touch-action: none;
+}
+
+.atlas-root canvas:active {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 22 22' fill='none'%3E%3Cpath d='M2 2L8.2 17.8L10.9 11.6L17.2 8.9L2 2Z' fill='%23d98a96' stroke='%23ece7e0' stroke-width='1.35' stroke-linejoin='round'/%3E%3C/svg%3E") 2 2, default !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   1. NIGHT / DARK MODE — Original Website Night Glass Theme + Atlas Palette
+   ═══════════════════════════════════════════════════════════════════════════ */
+.atlas-root.atlas-theme-dark {
+  color-scheme: dark;
+  color: #f1f5f9;
+  background: transparent !important;
+}
+
+/* Sidebar shells & main layout containers let the live Night Sky shine through */
+.atlas-root.atlas-theme-dark > aside,
+.atlas-root.atlas-theme-dark > main > div:first-child {
+  background-color: rgba(15, 23, 42, 0.58) !important;
+  border-color: rgba(160, 175, 255, 0.14) !important;
+  backdrop-filter: blur(18px) saturate(130%);
+  -webkit-backdrop-filter: blur(18px) saturate(130%);
+}
+
+/* Transform opaque stone backgrounds into Original Code Blue Night Glass while preserving card hierarchy */
+.atlas-root.atlas-theme-dark [class*="bg-[#0b1120]"] {
+  background-color: rgba(15, 23, 42, 0.42) !important;
+  border-color: rgba(160, 175, 255, 0.13) !important;
+}
+
+.atlas-root.atlas-theme-dark [class*="bg-[#0f172a]"] {
+  background-color: rgba(15, 23, 42, 0.56) !important;
+  border-color: rgba(160, 175, 255, 0.14) !important;
+}
+
+.atlas-root.atlas-theme-dark [class*="bg-[#131c31]"] {
+  background-color: rgba(15, 23, 42, 0.68) !important;
+  border-color: rgba(160, 175, 255, 0.15) !important;
+  backdrop-filter: blur(16px) saturate(125%);
+  -webkit-backdrop-filter: blur(16px) saturate(125%);
+  box-shadow: 0 14px 34px -20px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.atlas-root.atlas-theme-dark [class*="bg-[#1e293b]"],
+.atlas-root.atlas-theme-dark [class*="bg-[#1e293b]"],
+.atlas-root.atlas-theme-dark [class*="bg-[#26324d]"] {
+  background-color: rgba(30, 41, 59, 0.76) !important;
+  border-color: rgba(217, 138, 150, 0.35) !important;
+}
+
+.atlas-root.atlas-theme-dark [class*="border-[#26324d]"],
+.atlas-root.atlas-theme-dark [class*="border-[#26324d]"],
+.atlas-root.atlas-theme-dark [class*="border-[#26324d]"] {
+  border-color: rgba(160, 175, 255, 0.15) !important;
+}
+
+.atlas-root.atlas-theme-dark [class*="border-[#3b4d71]"],
+.atlas-root.atlas-theme-dark [class*="border-[#3b4d71]"] {
+  border-color: rgba(217, 138, 150, 0.45) !important;
+}
+
+.atlas-root.atlas-theme-dark h1,
+.atlas-root.atlas-theme-dark h2,
+.atlas-root.atlas-theme-dark h3,
+.atlas-root.atlas-theme-dark h4 {
+  color: #d98a96 !important;
+}
+
+.atlas-root.atlas-theme-dark p {
+  color: #94a3b8 !important;
+}
+
+.atlas-root.atlas-theme-dark input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+.atlas-root.atlas-theme-dark textarea,
+.atlas-root.atlas-theme-dark select {
+  background-color: rgba(15, 23, 42, 0.65) !important;
+  border-color: rgba(160, 175, 255, 0.18) !important;
+  color: #f1f5f9 !important;
+}
+
+.atlas-root.atlas-theme-dark input::placeholder,
+.atlas-root.atlas-theme-dark textarea::placeholder {
+  color: #94a3b8 !important;
+  opacity: 0.85;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   2. DAY / LIGHT MODE — Original Website Day Crystal Sky Glass Theme + Atlas Palette
+   ═══════════════════════════════════════════════════════════════════════════ */
+.atlas-root.atlas-theme-light {
+  color-scheme: light;
+  color: #0f172a !important;
+  background: transparent !important;
+}
+
+/* Sidebar shells & topbar let the live Day Sky & clouds shine through */
+.atlas-root.atlas-theme-light > aside,
+.atlas-root.atlas-theme-light > main > div:first-child {
+  background-color: rgba(255, 255, 255, 0.48) !important;
+  border-color: rgba(255, 255, 255, 0.65) !important;
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+}
+
+/* Transform all Dark Stone & White surfaces into Code Blue Crystal Day Glass in Light Mode */
+.atlas-root.atlas-theme-light [class*="bg-[#0b1120]"],
+.atlas-root.atlas-theme-light [class*="bg-[#f0f7ff]"] {
+  background-image: none !important;
+  background-color: rgba(255, 255, 255, 0.32) !important;
+  border-color: rgba(255, 255, 255, 0.58) !important;
+  color: #0f172a !important;
+}
+
+.atlas-root.atlas-theme-light [class*="bg-[#0f172a]"] {
+  background-image: none !important;
+  background-color: rgba(255, 255, 255, 0.46) !important;
+  border-color: rgba(255, 255, 255, 0.65) !important;
+  color: #0f172a !important;
+}
+
+.atlas-root.atlas-theme-light [class*="bg-[#131c31]"],
+.atlas-root.atlas-theme-light [class*="bg-white"],
+.atlas-root.atlas-theme-light [class*="bg-slate-9"],
+.atlas-root.atlas-theme-light [class*="bg-slate-8"] {
+  background-image: none !important;
+  background-color: rgba(255, 255, 255, 0.62) !important;
+  border-color: rgba(255, 255, 255, 0.72) !important;
+  color: #0f172a !important;
+  backdrop-filter: blur(18px) saturate(135%);
+  -webkit-backdrop-filter: blur(18px) saturate(135%);
+  box-shadow: 0 14px 32px -18px rgba(14, 116, 144, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+}
+
+.atlas-root.atlas-theme-light [class*="bg-[#1e293b]"],
+.atlas-root.atlas-theme-light [class*="bg-[#1e293b]"],
+.atlas-root.atlas-theme-light [class*="bg-[#26324d]"] {
+  background-image: none !important;
+  background-color: rgba(255, 255, 255, 0.78) !important;
+  border-color: rgba(190, 18, 60, 0.32) !important;
+  color: #0f172a !important;
+}
+
+.atlas-root.atlas-theme-light [class*="border-[#26324d]"],
+.atlas-root.atlas-theme-light [class*="border-[#26324d]"],
+.atlas-root.atlas-theme-light [class*="border-[#26324d]"],
+.atlas-root.atlas-theme-light [class*="border-[#bae6fd]"],
+.atlas-root.atlas-theme-light [class*="border-slate-"] {
+  border-color: rgba(14, 165, 233, 0.26) !important;
+}
+
+.atlas-root.atlas-theme-light [class*="border-[#3b4d71]"],
+.atlas-root.atlas-theme-light [class*="border-[#3b4d71]"] {
+  border-color: rgba(190, 18, 60, 0.42) !important;
+}
+
+/* Main headings in Light Mode keep the signature burgundy-rose identity */
+.atlas-root.atlas-theme-light h1,
+.atlas-root.atlas-theme-light h2,
+.atlas-root.atlas-theme-light h3,
+.atlas-root.atlas-theme-light h4,
+.atlas-root.atlas-theme-light [class*="text-[#d98a96]"] {
+  color: #be123c !important;
+}
+
+/* Primary & Secondary text in Light Mode match glass-theme.css (#0f172a & #334155) */
+.atlas-root.atlas-theme-light [class*="text-[#f1f5f9]"],
+.atlas-root.atlas-theme-light [class*="text-white"],
+.atlas-root.atlas-theme-light strong,
+.atlas-root.atlas-theme-light button {
+  color: #0f172a !important;
+}
+
+.atlas-root.atlas-theme-light p,
+.atlas-root.atlas-theme-light [class*="text-[#94a3b8]"],
+.atlas-root.atlas-theme-light [class*="text-slate-"] {
+  color: #334155 !important;
+}
+
+.atlas-root.atlas-theme-light input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+.atlas-root.atlas-theme-light textarea,
+.atlas-root.atlas-theme-light select {
+  background-color: rgba(255, 255, 255, 0.75) !important;
+  border-color: rgba(14, 165, 233, 0.35) !important;
+  color: #0f172a !important;
+}
+
+.atlas-root.atlas-theme-light input::placeholder,
+.atlas-root.atlas-theme-light textarea::placeholder {
+  color: #475569 !important;
+}
+
+.atlas-root button:not(:disabled),
+.atlas-root [role="button"]:not(:disabled) {
+  cursor: pointer;
+}
+
+@keyframes ecg-sweep {
+  from {
+    stroke-dashoffset: 620;
+  }
+  to {
+    stroke-dashoffset: -60;
+  }
+}
+
+.animate-ecg {
+  stroke-dasharray: 46 620;
+  animation: ecg-sweep 2.2s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-ecg {
+    animation: none;
+    stroke-dasharray: none;
+  }
+}
+
+/* Scanner range slider */
+.scan-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+}
+
+.scan-slider::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 9999px;
+  background: linear-gradient(
+    to right,
+    #d98a96 0 var(--scan-fill, 50%),
+    #26324d var(--scan-fill, 50%) 100%
+  );
+}
+
+.scan-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  margin-top: -4px;
+  border-radius: 9999px;
+  background: #f1f5f9;
+  border: 1px solid #26324d;
+}
+
+.scan-slider:focus-visible {
+  outline: 1px solid #94a3b8;
+  outline-offset: 3px;
+}
+
+.scan-slider::-moz-range-track {
+  height: 4px;
+  border-radius: 9999px;
+  background: linear-gradient(
+    to right,
+    #d98a96 0 var(--scan-fill, 50%),
+    #26324d var(--scan-fill, 50%) 100%
+  );
+}
+
+.scan-slider::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border: 0;
+  border-radius: 9999px;
+  background: #f1f5f9;
+}
+
+@media screen {
+  .print-layout,
+  .print-layout > tbody,
+  .print-layout > tfoot,
+  .print-layout tr,
+  .print-layout td {
+    display: block;
+    width: auto;
+  }
+}
+
+@media print {
+  :root {
+    color-scheme: light;
+  }
+  html,
+  body {
+    height: auto !important;
+    overflow: visible !important;
+    background: #fff !important;
+  }
+  .atlas-root,
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* Editorial Medical Typography Normalization inside Atlas */
+.atlas-root .font-black,
+.atlas-root .font-extrabold {
+  font-weight: 600 !important;
+  letter-spacing: -0.014em;
+}
+
+.atlas-root .uppercase.font-mono {
+  letter-spacing: 0.14em !important;
+  font-weight: 500 !important;
+}
+
+/* Visible clinical scrollbar for Breath/Heart/Scan panels */
+.atlas-scrollbar {
+  scrollbar-width: thin !important;
+  scrollbar-color: #d98a96 rgba(15, 23, 42, 0.35) !important;
+}
+.atlas-scrollbar::-webkit-scrollbar {
+  display: block !important;
+  width: 7px !important;
+  height: 7px !important;
+}
+.atlas-scrollbar::-webkit-scrollbar-track {
+  display: block !important;
+  background: rgba(15, 23, 42, 0.25) !important;
+  border-radius: 9999px !important;
+}
+.atlas-scrollbar::-webkit-scrollbar-thumb {
+  display: block !important;
+  background: rgba(217, 138, 150, 0.75) !important;
+  border-radius: 9999px !important;
+}
+.atlas-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #d98a96 !important;
+}
+
+
+/* Hide global website TopBar whenever AtlasScreen is active so Atlas occupies 100dvh */
+body:has(.atlas-root) > header {
+  display: none !important;
+}
+body:has(.atlas-root) > div {
+  padding-top: 0 !important;
+}
