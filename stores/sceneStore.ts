@@ -564,7 +564,7 @@ hiddenSystems: all.filter(entry => entry !== system && !(isUrogenital && (entry 
 skeletal: 0.18, muscular: 0.14
 } : {}, hideConnective: !isSkeletal,
 hoveredOrganId: null, depthStack: [],
-pinnedStack: null, mobileBodyRegion: NON_REGIONAL_VISCERAL_SYSTEMS.has(nextTarget) ? "all" : state.mobileBodyRegion
+pinnedStack: null, mobileBodyRegion: NON_REGIONAL_VISCERAL_SYSTEMS.has(system) ? "all" : state.mobileBodyRegion
 }; }
 const nextRegion = NON_REGIONAL_VISCERAL_SYSTEMS.has(system) ? "all" : state.mobileBodyRegion; let regionIsolated: string[] | null = null;
 if (nextRegion !== "all") { const matched = Object.values(state.organs).filter(o => (o.system === system || isUrogenital && (o.system === "reproductive" || o.system === "renal") || isSkeletal && (o.system === "skeletal" || o.system === "articular" || state.connectiveIds.has(o.organ_id)) || isNervous && (o.system === "skeletal" || o.system === "muscular")) && matchesMobileBodyRegion(o, nextRegion)).map(o => o.organ_id);
@@ -588,7 +588,7 @@ hiddenSystems: all.filter(entry => entry !== system && !(isUrogenital && (entry 
 skeletal: 0.18, muscular: 0.14
 } : {}, hideConnective: !isSkeletal,
 hoveredOrganId: null, depthStack: [],
-pinnedStack: null, mobileBodyRegion: NON_REGIONAL_VISCERAL_SYSTEMS.has(nextTarget) ? "all" : state.mobileBodyRegion
+pinnedStack: null, mobileBodyRegion: NON_REGIONAL_VISCERAL_SYSTEMS.has(system) ? "all" : state.mobileBodyRegion
 }; }
 const nextRegion = NON_REGIONAL_VISCERAL_SYSTEMS.has(system) ? "all" : state.mobileBodyRegion; let regionIsolated: string[] | null = null;
 if (nextRegion !== "all") { const matched = Object.values(state.organs).filter(o => (o.system === system || isUrogenital && (o.system === "reproductive" || o.system === "renal") || isSkeletal && (o.system === "skeletal" || o.system === "articular" || state.connectiveIds.has(o.organ_id)) || isNervous && (o.system === "skeletal" || o.system === "muscular")) && matchesMobileBodyRegion(o, nextRegion)).map(o => o.organ_id);
