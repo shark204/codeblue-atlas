@@ -1,0 +1,154 @@
+/* ═══════════════════════════════════════════════════════ */
+/* Google Font: Bricolage Grotesque — Code Blue Revision   */
+/* ═══════════════════════════════════════════════════════ */
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&display=swap');
+
+/* ═══════════════════════════════════════════════════════ */
+/* 📚 Scoped to .lesson-body so it never breaks TopBar,     */
+/*    SubjectsView cards, or inactive panels on /courses    */
+/* ═══════════════════════════════════════════════════════ */
+.lesson-body {
+  font-family: 'Bricolage Grotesque', 'Inter', system-ui, -apple-system, sans-serif !important;
+  font-optical-sizing: auto;
+  font-size: 16.5px;
+  line-height: 1.75;
+}
+
+.lesson-body p,
+.lesson-body span,
+.lesson-body li,
+.lesson-body td,
+.lesson-body th,
+.lesson-body dd,
+.lesson-body dt,
+.lesson-body div,
+.lesson-body a,
+.lesson-body label,
+.lesson-body blockquote,
+.lesson-body figcaption,
+.lesson-body article,
+.lesson-body section,
+.lesson-body small,
+.lesson-body em,
+.lesson-body b,
+.lesson-body i,
+.lesson-body u,
+.lesson-body mark,
+.lesson-body time,
+.lesson-body strong,
+.lesson-body h1,
+.lesson-body h2,
+.lesson-body h3,
+.lesson-body h4,
+.lesson-body h5,
+.lesson-body h6 {
+  font-family: 'Bricolage Grotesque', 'Inter', system-ui, -apple-system, sans-serif !important;
+  font-optical-sizing: auto;
+  font-weight: 600 !important;
+  font-size: 16.5px !important;
+  line-height: 1.75 !important;
+  letter-spacing: -0.005em !important;
+}
+
+.lesson-body strong,
+.lesson-body b,
+.lesson-body h1,
+.lesson-body h2,
+.lesson-body h3,
+.lesson-body h4,
+.lesson-body h5,
+.lesson-body h6 {
+  font-weight: 800 !important;
+  letter-spacing: -0.02em !important;
+}
+
+.lesson-body h1 { font-size: 1.8em  !important; }
+.lesson-body h2 { font-size: 1.5em  !important; }
+.lesson-body h3 { font-size: 1.25em !important; }
+.lesson-body h4 { font-size: 1.1em  !important; }
+
+/* ☀️ النهار: نص أسود داخل محتوى الدرس · 🌙 الليل: نص أبيض داخل محتوى الدرس */
+html:not(.dark) .lesson-body,
+html:not(.dark) .lesson-body *:not(svg):not(svg *):not(.katex):not(.katex *):not(i[class*="lucide"]) {
+  color: #0f172a !important;
+}
+
+html.dark .lesson-body,
+html.dark .lesson-body *:not(svg):not(svg *):not(.katex):not(.katex *):not(i[class*="lucide"]) {
+  color: #ffffff !important;
+}
+
+/* SVG / أيقونات Lucide */
+.lesson-body svg,
+.lesson-body svg *,
+.lesson-body i[class*="lucide"],
+.lesson-body i[class*="lucide"] * {
+  font-family: initial !important;
+}
+
+/* KaTeX (المعادلات) */
+.katex, .katex * {
+  font-family: 'KaTeX_Main', 'Times New Roman', serif !important;
+  color: inherit !important;
+  font-weight: inherit !important;
+}
+
+/* 🎯 MCQ Pearls & Must Remember */
+section[class*="border-violet-"] *:not(svg):not(svg *):not(.katex),
+section[class*="border-amber-"] *:not(svg):not(svg *):not(.katex) {
+  font-family: 'Bricolage Grotesque', 'Inter', system-ui, sans-serif !important;
+  font-size: 16.5px !important;
+  font-weight: 700 !important;
+  line-height: 1.7 !important;
+}
+
+section[class*="border-violet-"] strong,
+section[class*="border-amber-"] strong,
+section[class*="border-violet-"] b,
+section[class*="border-amber-"] b {
+  font-weight: 800 !important;
+}
+
+section[class*="border-violet-"] h3,
+section[class*="border-amber-"] h3 {
+  font-weight: 800 !important;
+  font-size: 15px !important;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+/* Recall mode */
+.smart-recall[data-recall='true'] strong:not(.is-revealed),
+.smart-recall[data-recall='true'] b:not(.is-revealed) {
+  filter: blur(6px);
+  cursor: pointer;
+  user-select: none;
+  transition: filter 0.2s ease;
+}
+.smart-recall[data-recall='true'] strong.is-revealed,
+.smart-recall[data-recall='true'] b.is-revealed {
+  filter: none;
+  background: rgba(16, 185, 129, 0.18);
+  border-radius: 4px;
+  padding: 0 2px;
+}
+
+/* Math */
+.smart-math-block .katex-display { margin: 0; }
+.smart-math-block .katex-display > .katex { font-size: 1.05em; }
+
+@media (max-width: 640px) {
+  .smart-math-block .katex-display > .katex { font-size: 0.78em; }
+}
+@media (max-width: 420px) {
+  .smart-math-block .katex-display > .katex { font-size: 0.68em; }
+}
+
+.smart-inline-math .katex { font-size: 1em; }
+@media (max-width: 640px) {
+  .smart-inline-math .katex { font-size: 0.85em; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .smart-recall strong, .smart-recall b { transition: none !important; }
+}
