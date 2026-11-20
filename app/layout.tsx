@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "./globals.css";
+import "./glass-theme.css";
+import SkyBackground from "@/components/SkyBackground";
 
 export const metadata: Metadata = {
   title: "codeblue-atlas",
@@ -7,6 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const Sky = SkyBackground as any;
   return (
     <html
       lang="en"
@@ -28,7 +32,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="min-h-screen bg-[#060913] text-slate-100 antialiased overflow-hidden" suppressHydrationWarning>
-        {children}
+        <Script id="theme-sync" strategy="beforeInteractive">{`
+          (function () {
+            try {
+              var saved = localStorage.getItem('codeblue_theme');
+              var theme = (saved === 'light' || saved === 'dark') ? saved : 'dark';
+              var root = document.documentElement;
+              root.dataset.theme = theme;
+              if (theme === 'dark') root.classList.add('dark');
+              else root.classList.remove('dark');
+            } catch (e) {}
+          })();
+        `}</Script>
+        <Sky governorate="القاهرة" showSwitcher={false} />
+        <div style={{ position: "relative", zIndex: 1 }}>
+          {children}
+        </div>
       </body>
     </html>
   );
