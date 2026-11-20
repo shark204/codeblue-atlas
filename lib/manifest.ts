@@ -710,47 +710,53 @@ organs.push({ ...o,
 organ_id: endoId, system: "endocrine",
 path: ["Major endocrine glands", "Gonads (Ovaries)"] });
 existingIds.add(endoId); }
+} if ((o.system === "integumentary" || o.system === "reproductive") && /(mammary|breast)/i.test(`${o.organ_id} ${o.name_en}`)) {
+const endoId = `endo_mammary_${o.organ_id}`; if (!existingIds.has(endoId)) {
+organs.push({ ...o,
+organ_id: endoId, name_en: /left|_l\b/i.test(`${o.organ_id} ${o.name_en}`) ? "Mammary gland (left)" : /right|_r\b/i.test(`${o.organ_id} ${o.name_en}`) ? "Mammary gland (right)" : o.name_en,
+system: "endocrine", path: ["Major endocrine glands", "Mammary glands (Breast)"]
+}); existingIds.add(endoId);
 } }
-const counts = new Map<string, number>(); for (const o of organs) {
-counts.set(o.system, (counts.get(o.system) ?? 0) + 1); }
-const baseSystems = rawMale ? rawMale.systems : rawFemale.systems; const seenSystems = new Set<string>();
-const systems = baseSystems.map(s => { seenSystems.add(s.system);
-return { ...s,
-organ_count: counts.get(s.system) ?? 0 };
-}); for (const [sys, cnt] of counts.entries()) {
-if (!seenSystems.has(sys)) { systems.push({
-system: (sys as AnatomyManifest["systems"][number]["system"]), organ_count: cnt,
-load_on_start: sys === "skeletal" || sys === "reproductive" });
-} }
-return { ...rawFemale,
-systems, organs
-}; }
-const manifestCache = new Map<GenderModel, AnatomyManifest>(); const inflightCache = new Map<GenderModel, Promise<AnatomyManifest>>();
-export async function loadManifest(gender: GenderModel, _signal?: AbortSignal): Promise<AnatomyManifest> { const cached = manifestCache.get(gender);
-if (cached) return cached; const existing = inflightCache.get(gender);
-if (existing) return existing; const promise = (async () => {
-const fetchOpts = { cache: ("force-cache" as const)
-}; if (gender === "female") {
-const [femaleRes, maleRes] = await Promise.all([fetch(MANIFEST_URL.female, fetchOpts), fetch(MANIFEST_URL.male, fetchOpts).catch(() => null)]); if (!femaleRes.ok) {
-throw new Error(`Could not load the anatomy manifest (HTTP ${femaleRes.status}).`); }
-const rawFemale = (await femaleRes.json() as AnatomyManifest); const rawMale = maleRes && maleRes.ok ? (await maleRes.json() as AnatomyManifest) : null;
-if (!rawFemale || !Array.isArray(rawFemale.organs) || !Array.isArray(rawFemale.systems)) { throw new Error("The anatomy manifest is malformed.");
-} const data = enrichFemaleManifest(rawFemale, rawMale);
-manifestCache.set("female", data); return data;
-} const response = await fetch(MANIFEST_URL.male, fetchOpts);
-if (!response.ok) { throw new Error(`Could not load the anatomy manifest (HTTP ${response.status}).`);
-} const rawData = (await response.json() as AnatomyManifest);
-if (!rawData || !Array.isArray(rawData.organs) || !Array.isArray(rawData.systems)) { throw new Error("The anatomy manifest is malformed.");
-} const data = enrichMaleManifest(rawData);
-manifestCache.set("male", data); return data;
-})(); inflightCache.set(gender, promise);
-try { return await promise;
-} finally { inflightCache.delete(gender);
-} }
-if (typeof window !== "undefined") { void loadManifest("male").catch(() => {});
-void loadManifest("female").catch(() => {}); }
-export function meshUrl(file: string): string { return MESH_BASE + file;
-} export function meshFilesForSystems(manifest: AnatomyManifest, systems: ReadonlySet<string>): string[] {
-return [...new Set(manifest.organs.filter(organ => systems.has(organ.system)).map(organ => organ.mesh_file))].sort(); }
-export function organsInFile(manifest: AnatomyManifest, file: string): ManifestOrgan[] { return manifest.organs.filter(organ => organ.mesh_file === file);
-}
+} const counts = new Map<string, number>();
+for (const o of organs) { counts.set(o.system, (counts.get(o.system) ?? 0) + 1);
+} const baseSystems = rawMale ? rawMale.systems : rawFemale.systems;
+const seenSystems = new Set<string>(); const systems = baseSystems.map(s => {
+seenSystems.add(s.system); return {
+...s, organ_count: counts.get(s.system) ?? 0
+}; });
+for (const [sys, cnt] of counts.entries()) { if (!seenSystems.has(sys)) {
+systems.push({ system: (sys as AnatomyManifest["systems"][number]["system"]),
+organ_count: cnt, load_on_start: sys === "skeletal" || sys === "reproductive"
+}); }
+} return {
+...rawFemale, systems,
+organs };
+} const manifestCache = new Map<GenderModel, AnatomyManifest>();
+const inflightCache = new Map<GenderModel, Promise<AnatomyManifest>>(); export async function loadManifest(gender: GenderModel, _signal?: AbortSignal): Promise<AnatomyManifest> {
+const cached = manifestCache.get(gender); if (cached) return cached;
+const existing = inflightCache.get(gender); if (existing) return existing;
+const promise = (async () => { const fetchOpts = {
+cache: ("force-cache" as const) };
+if (gender === "female") { const [femaleRes, maleRes] = await Promise.all([fetch(MANIFEST_URL.female, fetchOpts), fetch(MANIFEST_URL.male, fetchOpts).catch(() => null)]);
+if (!femaleRes.ok) { throw new Error(`Could not load the anatomy manifest (HTTP ${femaleRes.status}).`);
+} const rawFemale = (await femaleRes.json() as AnatomyManifest);
+const rawMale = maleRes && maleRes.ok ? (await maleRes.json() as AnatomyManifest) : null; if (!rawFemale || !Array.isArray(rawFemale.organs) || !Array.isArray(rawFemale.systems)) {
+throw new Error("The anatomy manifest is malformed."); }
+const data = enrichFemaleManifest(rawFemale, rawMale); manifestCache.set("female", data);
+return data; }
+const response = await fetch(MANIFEST_URL.male, fetchOpts); if (!response.ok) {
+throw new Error(`Could not load the anatomy manifest (HTTP ${response.status}).`); }
+const rawData = (await response.json() as AnatomyManifest); if (!rawData || !Array.isArray(rawData.organs) || !Array.isArray(rawData.systems)) {
+throw new Error("The anatomy manifest is malformed."); }
+const data = enrichMaleManifest(rawData); manifestCache.set("male", data);
+return data; })();
+inflightCache.set(gender, promise); try {
+return await promise; } finally {
+inflightCache.delete(gender); }
+} if (typeof window !== "undefined") {
+void loadManifest("male").catch(() => {}); void loadManifest("female").catch(() => {});
+} export function meshUrl(file: string): string {
+return MESH_BASE + file; }
+export function meshFilesForSystems(manifest: AnatomyManifest, systems: ReadonlySet<string>): string[] { return [...new Set(manifest.organs.filter(organ => systems.has(organ.system)).map(organ => organ.mesh_file))].sort();
+} export function organsInFile(manifest: AnatomyManifest, file: string): ManifestOrgan[] {
+return manifest.organs.filter(organ => organ.mesh_file === file); }
