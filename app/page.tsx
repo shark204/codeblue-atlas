@@ -65,6 +65,17 @@ export default function StandaloneAtlasPage() {
     return () => cancelAnimationFrame(id);
   }, []);
 
+
+  useEffect(() => {
+    try {
+      localStorage.setItem("codeblue_theme", theme);
+      localStorage.removeItem("sky:mode-override");
+      document.documentElement.dataset.theme = theme;
+      document.documentElement.classList.toggle("dark", theme === "dark");
+      document.documentElement.classList.toggle("light", theme === "light");
+    } catch {}
+  }, [theme]);
+
   const handleToggleTheme = () => {
     toggleTheme();
     const next = theme === "dark" ? "light" : "dark";
@@ -202,7 +213,7 @@ export default function StandaloneAtlasPage() {
                 <button
                   type="button"
                   onClick={() => setEnteredAtlas(true)}
-                  className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-gradient-to-r from-cyan-400 to-emerald-400 hover:from-cyan-300 hover:to-emerald-300 text-slate-950 font-black text-sm sm:text-base shadow-[0_0_30px_rgba(16,185,129,0.45)] transition transform hover:scale-[1.03] active:scale-[0.99] cursor-pointer"
+                  className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-gradient-to-r from-emerald-400 to-green-400 hover:from-emerald-300 hover:to-green-300 text-slate-950 font-black text-sm sm:text-base shadow-[0_0_30px_rgba(16,185,129,0.45)] transition transform hover:scale-[1.03] active:scale-[0.99] cursor-pointer"
                 >
                   <span>{isAr ? "افتح الأطلس الآن" : "Open 3D Atlas Now"}</span>
                   {isAr ? <ChevronLeft className="w-5 h-5" /> : <ChevronRight className="w-5 h-5" />}
@@ -291,10 +302,10 @@ export default function StandaloneAtlasPage() {
           {/* Right / Transparent PNG Hero Visual (Non-clickable) */}
           <div className="lg:col-span-6 flex items-center justify-center">
             <img
-              src="/hero-atlas.png?v=2"
+              src="/hero-atlas.png?v=3"
               alt="Code Blue 3D Anatomy Atlas"
               draggable={false}
-              className="w-full max-w-[540px] max-h-[70vh] h-auto object-contain select-none pointer-events-none drop-shadow-[0_20px_45px_rgba(16,185,129,0.28)]"
+              className={`w-full max-w-[540px] max-h-[70vh] h-auto object-contain select-none pointer-events-none ${isLight ? "drop-shadow-[0_0_24px_rgba(255,255,255,0.85)]" : "drop-shadow-[0_14px_32px_rgba(16,185,129,0.18)]"}`}
             />
           </div>
         </div>
