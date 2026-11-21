@@ -4,7 +4,7 @@
     origWarn.apply(console, args);   }; }
 import { atStatic, useAtlasLocale } from "@/lib/atlasI18n"; import { AdaptiveDpr } from "@react-three/drei"; import { Canvas } from "@react-three/fiber";
 import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react"; import { useRouter } from "next/navigation"; import * as THREE from "three";
-import { ArrowLeft, Check, ChevronDown, Crosshair, Dumbbell, Eye, EyeOff, MousePointerClick, Trash2, Undo2, Users, Network, Compass, Activity, Droplets, Scissors, ShieldAlert, Zap, X, Volume2, RotateCcw, Home, Plus, Minus, Layers, Focus, Box, ScanLine, Wind } from "lucide-react"; import { loadManifest } from "@/lib/manifest"; import type { AnatomicalSystem, AnatomyManifest } from "@/lib/schemas";
+import { Crown,  ArrowLeft, Check, ChevronDown, Crosshair, Dumbbell, Eye, EyeOff, MousePointerClick, Trash2, Undo2, Users, Network, Compass, Activity, Droplets, Scissors, ShieldAlert, Zap, X, Volume2, RotateCcw, Home, Plus, Minus, Layers, Focus, Box, ScanLine, Wind } from "lucide-react"; import { loadManifest } from "@/lib/manifest"; import type { AnatomicalSystem, AnatomyManifest } from "@/lib/schemas";
 import { matchOrganToEntry } from "@/lib/atlasKnowledgeIndex"; import { isOrganVisible, organLabel, organSubtitle, useSceneStore, type MobileBodyRegion } from "@/stores/sceneStore"; import { useUIStore } from "@/stores/uiStore";
 import { useHeartStore } from "@/stores/heartStore"; import { useBreathStore } from "@/stores/breathStore"; import { useScanStore } from "@/stores/scanStore";
 import { readStoredView, sanitiseViewPreferences } from "@/stores/viewPreferences"; import { ATLAS_STYLE } from "./background"; import { InitialHeartShowcase, useOrganAtelierStore } from "@/features/study/StudyPanel";
@@ -717,52 +717,107 @@ function CompleteAnatomyBottomDock() {   const {     isAr,
               <Compass size={13} className="text-cyan-400" />               <span>{at("الزوايا القياسية (Preset View)", "Preset View")}</span>             </button>
             <ExplodeBar inline />           </div>         </div>
         {}         <div className={`pointer-events-auto relative flex max-w-full items-center gap-1.5 rounded-2xl border px-2.5 py-1.5 shadow-[0_12px_40px_rgba(0,0,0,0.85)] backdrop-blur-xl ${isLight ? "border-[#bae6fd] bg-white/95 text-[#0b1120]" : "border-[#26324d] bg-[#0f172a]/95 text-[#f1f5f9]"}`}>           {}
-          <div className="relative flex shrink-0 flex-col items-center gap-0.5">             {radialHubOpen && <div className="pointer-events-auto absolute bottom-full left-[-8px] sm:left-[-4px] z-[95] mb-3 flex flex-col items-center">                 {}
-                <div className="relative z-10 grid h-[238px] w-[238px] grid-cols-2 grid-rows-2 gap-1.5 rounded-full border border-cyan-400/45 bg-[#0b1120] p-2 shadow-[0_24px_70px_rgba(0,0,0,0.95)] ring-2 ring-cyan-400/35 backdrop-blur-xl animate-in zoom-in-90 duration-200">                   {}                   <button type="button" onClick={() => {
-                setRadialHubOpen(false);                 useBreathStore.setState({                   enabled: false,
-                  sound: false                 });                 useScanStore.setState({
-                  enabled: false                 });                 useOrganAtelierStore.getState().setActiveTab("atlas");
-                useHeartStore.setState({                   enabled: true,                   sound: true
-                });               }} title={at("أصوات وتخطيط القلب", "Heart Sounds & ECG")} className="group relative flex flex-col items-center justify-center overflow-hidden rounded-tl-full rounded-tr-xl rounded-bl-xl rounded-br-md border border-rose-400/40 bg-[#131c31] pl-5 pt-5 pr-2 pb-2 text-rose-300 transition hover:border-rose-400 hover:bg-rose-500/20">                     <Activity size={18} className="shrink-0 text-rose-400 transition-transform group-hover:scale-110" />
-                    <span className="mt-1 max-w-[74px] break-words text-center text-[8.5px] font-black leading-tight text-white">                       {at("أصوات وتخطيط القلب", "Heart Sounds & ECG")}                     </span>
-                  </button>                   {}                   <button type="button" onClick={() => {
-                setRadialHubOpen(false);                 useHeartStore.setState({                   enabled: false,
-                  sound: false                 });                 useScanStore.setState({
-                  enabled: false                 });                 useOrganAtelierStore.getState().setActiveTab("atlas");
-                useBreathStore.setState({                   enabled: true,                   sound: true
-                });               }} title={at("أصوات الصدر والتنفس", "Chest & Breath Sounds")} className="group relative flex flex-col items-center justify-center overflow-hidden rounded-tr-full rounded-tl-xl rounded-br-xl rounded-bl-md border border-cyan-400/40 bg-[#131c31] pr-5 pt-5 pl-2 pb-2 text-cyan-300 transition hover:border-cyan-400 hover:bg-cyan-500/20">                     <Wind size={18} className="shrink-0 text-cyan-400 transition-transform group-hover:scale-110" />
-                    <span className="mt-1 max-w-[74px] break-words text-center text-[8.5px] font-black leading-tight text-white">                       {at("أصوات الصدر والتنفس", "Chest & Breath Sounds")}                     </span>
-                  </button>                   {}                   <button type="button" onClick={() => {
-                setRadialHubOpen(false);                 useHeartStore.setState({                   enabled: false,
-                  sound: false                 });                 useBreathStore.setState({
-                  enabled: false,                   sound: false                 });
-                useOrganAtelierStore.getState().setActiveTab("atlas");                 useScanStore.setState({                   enabled: true,
-                  panel: true,                   cut: false,                   axial: true,
-                  ghost: false                 });               }} title={at("الأشعة والتشخيص الذكي", "Radiology & AI Scanner")} className="group relative flex flex-col items-center justify-center overflow-hidden rounded-bl-full rounded-tl-xl rounded-br-xl rounded-tr-md border border-amber-400/40 bg-[#131c31] pl-5 pb-5 pr-2 pt-2 text-amber-300 transition hover:border-amber-400 hover:bg-amber-500/20">
-                    <ScanLine size={18} className="shrink-0 text-amber-400 transition-transform group-hover:scale-110" />                     <span className="mt-1 max-w-[74px] break-words text-center text-[8.5px] font-black leading-tight text-white">                       {at("الأشعة والتشخيص الذكي", "Radiology & AI Scanner")}
-                    </span>                   </button>                   {}
-                  <button type="button" onClick={() => {                 setRadialHubOpen(false);                 useHeartStore.setState({
-                  enabled: false,                   sound: false                 });
-                useBreathStore.setState({                   enabled: false,                   sound: false
-                });                 useScanStore.setState({                   enabled: false
-                });                 useOrganAtelierStore.getState().setActiveTab("organs");               }} title={at("مجسمات الأعضاء 3D", "3D Organs Atelier")} className="group relative flex flex-col items-center justify-center overflow-hidden rounded-br-full rounded-tr-xl rounded-bl-xl rounded-tl-md border border-emerald-400/40 bg-[#131c31] pr-5 pb-5 pl-2 pt-2 text-emerald-300 transition hover:border-emerald-400 hover:bg-emerald-500/20">
-                    <Box size={18} className="shrink-0 text-emerald-400 transition-transform group-hover:scale-110" />                     <span className="mt-1 max-w-[74px] break-words text-center text-[8.5px] font-black leading-tight text-white">                       {at("مجسمات الأعضاء 3D", "3D Organs Atelier")}
-                    </span>                   </button>                   {}
-                  <button type="button" onClick={() => setRadialHubOpen(false)} className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex h-7 w-7 items-center justify-center rounded-full border border-cyan-400/70 bg-[#0b1120] text-white shadow-lg transition hover:bg-rose-500" title={at("إغلاق", "Close")}>                     <X size={12} />                   </button>
-                </div>                 {}                 <svg className="pointer-events-none absolute top-0 left-0 z-0 h-[252px] w-[238px] overflow-visible" viewBox="0 0 238 252" fill="none">
-                  <defs>                     <linearGradient id="radialBeamLeft" x1="8" y1="254" x2="2" y2="139" gradientUnits="userSpaceOnUse">                       <stop offset="0%" stopColor="#22d3ee" stopOpacity="0.72" />
-                      <stop offset="70%" stopColor="#38bdf8" stopOpacity="0.32" />                       <stop offset="100%" stopColor="#22d3ee" stopOpacity="0.08" />                     </linearGradient>
-                    <linearGradient id="radialBeamRight" x1="39" y1="254" x2="148" y2="234" gradientUnits="userSpaceOnUse">                       <stop offset="0%" stopColor="#22d3ee" stopOpacity="0.72" />                       <stop offset="70%" stopColor="#38bdf8" stopOpacity="0.32" />
-                      <stop offset="100%" stopColor="#22d3ee" stopOpacity="0.08" />                     </linearGradient>                     <filter id="radialBeamBlur" x="-30%" y="-20%" width="160%" height="140%">
-                      <feGaussianBlur stdDeviation="2.8" />                     </filter>                   </defs>
-                  <path d="M 8 254 L 2 139" stroke="url(#radialBeamLeft)" strokeWidth="5" strokeLinecap="round" filter="url(#radialBeamBlur)" />                   <path d="M 39 254 L 148 234" stroke="url(#radialBeamRight)" strokeWidth="5" strokeLinecap="round" filter="url(#radialBeamBlur)" />                   <path d="M 8 254 L 2 139" stroke="url(#radialBeamLeft)" strokeWidth="1.4" strokeLinecap="round" />
-                  <path d="M 39 254 L 148 234" stroke="url(#radialBeamRight)" strokeWidth="1.4" strokeLinecap="round" />                 </svg>               </div>}
-            <button type="button" onClick={() => setRadialHubOpen(v => !v)} title={at("الأصوات والأشعة والأعضاء 3D", "Sounds, Radiology & 3D Organs Tools")} className={`relative grid h-8 w-8 shrink-0 grid-cols-2 grid-rows-2 gap-[1.5px] rounded-full border p-[2px] shadow-md transition-transform duration-500 ease-out ${radialHubOpen ? "-rotate-[360deg] border-cyan-400 bg-cyan-500/20 ring-2 ring-cyan-400/50 scale-105" : "rotate-0 border-[#3b4d71] bg-[#0b1120] hover:border-cyan-400"}`}>               <span className="flex items-center justify-center rounded-tl-full border border-rose-400/35 bg-[#131c31] text-rose-400">                 <Activity size={7.5} />
-              </span>               <span className="flex items-center justify-center rounded-tr-full border border-cyan-400/35 bg-[#131c31] text-cyan-400">                 <Wind size={7.5} />
-              </span>               <span className="flex items-center justify-center rounded-bl-full border border-amber-400/35 bg-[#131c31] text-amber-400">                 <ScanLine size={7.5} />
-              </span>               <span className="flex items-center justify-center rounded-br-full border border-emerald-400/35 bg-[#131c31] text-emerald-400">                 <Box size={7.5} />
-              </span>             </button>             <span className={`text-[7.5px] font-bold leading-none ${radialHubOpen ? "text-cyan-300" : "text-[#94a3b8]"}`}>
-              {at("الأدوات", "Tools")}             </span>           </div>
+          <div className="relative flex shrink-0 flex-col items-center gap-0.5">             {radialHubOpen && <div className="pointer-events-auto absolute bottom-full left-[-8px] sm:left-[-4px] z-[95] mb-3 flex flex-col items-center">
+                <div className="relative z-10 grid h-[272px] w-[272px] grid-cols-2 grid-rows-2 gap-1.5 rounded-full border border-cyan-400/45 bg-[#0b1120] p-2.5 shadow-[0_24px_70px_rgba(0,0,0,0.95)] ring-2 ring-cyan-400/35 backdrop-blur-xl animate-in zoom-in-90 duration-200">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setRadialHubOpen(false);
+                      if (typeof window !== "undefined") window.location.href = (process.env.NEXT_PUBLIC_SOUNDS_URL || "https://codeblue-sounds.vercel.app");
+                    }}
+                    title={at("أداة تشخيص الـ ECG والأصوات", "ECG Diagnosing Tool & Sounds")}
+                    className="group relative flex flex-col items-center justify-center overflow-hidden rounded-tl-full rounded-tr-xl rounded-bl-xl rounded-br-md border border-rose-400/45 bg-[#131c31] pl-5 pt-6 pr-2 pb-2 text-rose-300 transition hover:border-rose-400 hover:bg-rose-500/20"
+                  >
+                    <span className="mb-1 inline-flex items-center gap-0.5 rounded-full border border-amber-400/70 bg-gradient-to-r from-amber-500/25 via-yellow-400/25 to-rose-500/25 px-1.5 py-[1px] text-[6.2px] font-black uppercase tracking-wider text-amber-200 shadow-[0_0_10px_rgba(245,158,11,0.4)]">
+                      <Crown size={7} className="shrink-0 text-amber-300" />
+                      <span>ULTRA PREMIUM</span>
+                    </span>
+                    <Activity size={17} className="shrink-0 text-rose-400 transition-transform group-hover:scale-110" />
+                    <span className="mt-1 max-w-[92px] break-words text-center text-[8.5px] font-black leading-tight text-white">
+                      ECG Diagnosing Tool &amp; Sounds
+                    </span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setRadialHubOpen(false);
+                      if (typeof window !== "undefined") window.location.href = (process.env.NEXT_PUBLIC_RADIOLOGY_URL || "https://codeblue-radiology.vercel.app");
+                    }}
+                    title={at("أداة تشخيص وتعليم الأشعة", "Radiology Diagnosing Tool & Teaching")}
+                    className="group relative flex flex-col items-center justify-center overflow-hidden rounded-tr-full rounded-tl-xl rounded-br-xl rounded-bl-md border border-amber-400/45 bg-[#131c31] pr-5 pt-6 pl-2 pb-2 text-amber-300 transition hover:border-amber-400 hover:bg-amber-500/20"
+                  >
+                    <span className="mb-1 inline-flex items-center gap-0.5 rounded-full border border-amber-400/70 bg-gradient-to-r from-amber-500/25 via-yellow-400/25 to-cyan-500/25 px-1.5 py-[1px] text-[6.2px] font-black uppercase tracking-wider text-amber-200 shadow-[0_0_10px_rgba(245,158,11,0.4)]">
+                      <Crown size={7} className="shrink-0 text-amber-300" />
+                      <span>ULTRA PREMIUM</span>
+                    </span>
+                    <ScanLine size={17} className="shrink-0 text-amber-400 transition-transform group-hover:scale-110" />
+                    <span className="mt-1 max-w-[96px] break-words text-center text-[8.5px] font-black leading-tight text-white">
+                      Radiology Diagnosing Tool &amp; Teaching
+                    </span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setRadialHubOpen(false);
+                      useHeartStore.setState({ enabled: false, sound: false });
+                      useBreathStore.setState({ enabled: false, sound: false });
+                      useScanStore.setState({ enabled: false });
+                      useOrganAtelierStore.getState().setActiveTab("organs");
+                    }}
+                    title={at("تشريح العضو الفردي 3D", "3D Single Organ Anatomy")}
+                    className="group relative col-span-2 flex flex-col items-center justify-center overflow-hidden rounded-b-full rounded-t-xl border border-emerald-400/45 bg-[#131c31] px-8 pt-4 pb-5 text-emerald-300 transition hover:border-emerald-400 hover:bg-emerald-500/20"
+                  >
+                    <Box size={18} className="shrink-0 text-emerald-400 transition-transform group-hover:scale-110" />
+                    <span className="mt-1 text-center text-[9.5px] font-black leading-tight text-white">
+                      3D Single Organ Anatomy
+                    </span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setRadialHubOpen(false)}
+                    className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex h-7 w-7 items-center justify-center rounded-full border border-cyan-400/70 bg-[#0b1120] text-white shadow-lg transition hover:bg-rose-500"
+                    title={at("إغلاق", "Close")}
+                  >
+                    <X size={12} />
+                  </button>
+                </div>
+                <svg className="pointer-events-none absolute top-0 left-0 z-0 h-[286px] w-[272px] overflow-visible" viewBox="0 0 272 286" fill="none">
+                  <defs>
+                    <linearGradient id="radialBeamLeft" x1="8" y1="288" x2="2" y2="156" gradientUnits="userSpaceOnUse">
+                      <stop offset="0%" stopColor="#22d3ee" stopOpacity="0.72" />
+                      <stop offset="70%" stopColor="#38bdf8" stopOpacity="0.32" />
+                      <stop offset="100%" stopColor="#22d3ee" stopOpacity="0.08" />
+                    </linearGradient>
+                    <linearGradient id="radialBeamRight" x1="39" y1="288" x2="168" y2="266" gradientUnits="userSpaceOnUse">
+                      <stop offset="0%" stopColor="#22d3ee" stopOpacity="0.72" />
+                      <stop offset="70%" stopColor="#38bdf8" stopOpacity="0.32" />
+                      <stop offset="100%" stopColor="#22d3ee" stopOpacity="0.08" />
+                    </linearGradient>
+                    <filter id="radialBeamBlur" x="-30%" y="-20%" width="160%" height="140%">
+                      <feGaussianBlur stdDeviation="2.8" />
+                    </filter>
+                  </defs>
+                  <path d="M 8 288 L 2 156" stroke="url(#radialBeamLeft)" strokeWidth="5" strokeLinecap="round" filter="url(#radialBeamBlur)" />
+                  <path d="M 39 288 L 168 266" stroke="url(#radialBeamRight)" strokeWidth="5" strokeLinecap="round" filter="url(#radialBeamBlur)" />
+                  <path d="M 8 288 L 2 156" stroke="url(#radialBeamLeft)" strokeWidth="1.4" strokeLinecap="round" />
+                  <path d="M 39 288 L 168 266" stroke="url(#radialBeamRight)" strokeWidth="1.4" strokeLinecap="round" />
+                </svg>
+              </div>}
+            <button type="button" onClick={() => setRadialHubOpen(v => !v)} title={at("أدوات التشخيص والأعضاء 3D", "ECG, Radiology & 3D Single Organ Tools")} className={`relative grid h-8 w-8 shrink-0 grid-cols-2 grid-rows-2 gap-[1.5px] rounded-full border p-[2px] shadow-md transition-transform duration-500 ease-out ${radialHubOpen ? "-rotate-[360deg] border-cyan-400 bg-cyan-500/20 ring-2 ring-cyan-400/50 scale-105" : "rotate-0 border-[#3b4d71] bg-[#0b1120] hover:border-cyan-400"}`}>
+              <span className="flex items-center justify-center rounded-tl-full border border-rose-400/35 bg-[#131c31] text-rose-400">
+                <Activity size={7.5} />
+              </span>
+              <span className="flex items-center justify-center rounded-tr-full border border-amber-400/35 bg-[#131c31] text-amber-400">
+                <ScanLine size={7.5} />
+              </span>
+              <span className="col-span-2 flex items-center justify-center rounded-b-full border border-emerald-400/35 bg-[#131c31] text-emerald-400">
+                <Box size={7.5} />
+              </span>
+            </button>
+            <span className={`text-[7.5px] font-bold leading-none ${radialHubOpen ? "text-cyan-300" : "text-[#94a3b8]"}`}>
+              {at("الأدوات", "Tools")}
+            </span>
+          </div>
           {}           <button type="button" onClick={() => setModelsModalOpen(true)} className="flex shrink-0 items-center gap-1.5 rounded-xl border border-[#3b4d71] bg-[#131c31] px-2.5 py-1 text-left transition hover:border-[#d98a96] hover:bg-[#d98a96] hover:text-[#0b1120] group" title={at("تغيير النموذج أو المنطقة التشريحية (Models)", "Open Code Blue 3D Models Selector")}>             <Users size={14} className="text-[#d98a96] group-hover:text-[#0b1120]" />
             <div className="leading-tight">               <div className="text-[9.5px] font-black uppercase tracking-wider text-[#f1f5f9] group-hover:text-[#0b1120]">                 Models
               </div>               <div className="text-[8px] font-bold text-[#d98a96] group-hover:text-[#0b1120]">                 {genderModel === "female" ? "Female" : "Male"}
