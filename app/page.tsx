@@ -70,6 +70,7 @@ export default function StandaloneAtlasPage() {
     try {
       localStorage.setItem("codeblue_theme", theme);
       localStorage.removeItem("sky:mode-override");
+      localStorage.removeItem("sky:manual-mode");
       document.documentElement.dataset.theme = theme;
       document.documentElement.classList.toggle("dark", theme === "dark");
       document.documentElement.classList.toggle("light", theme === "light");
@@ -81,6 +82,7 @@ export default function StandaloneAtlasPage() {
     const next = theme === "dark" ? "light" : "dark";
     try {
       localStorage.setItem("codeblue_theme", next);
+      localStorage.removeItem("sky:manual-mode");
       document.documentElement.dataset.theme = next;
       document.documentElement.classList.toggle("dark", next === "dark");
     } catch {}
@@ -299,14 +301,59 @@ export default function StandaloneAtlasPage() {
             </div>
           </div>
 
-          {/* Right / Transparent PNG Hero Visual (Non-clickable) */}
+          {/* Right / Transparent PNG Hero Visual + Night-Only 3 Misty Beams Between Organ Circles */}
           <div className="lg:col-span-6 flex items-center justify-center">
-            <img
-              src="/hero-atlas.png?v=3"
-              alt="Code Blue 3D Anatomy Atlas"
-              draggable={false}
-              className={`w-full max-w-[540px] max-h-[70vh] h-auto object-contain select-none pointer-events-none ${isLight ? "drop-shadow-[0_0_24px_rgba(255,255,255,0.85)]" : "drop-shadow-[0_14px_32px_rgba(16,185,129,0.18)]"}`}
-            />
+            <div className="relative inline-block w-full max-w-[540px]">
+              {!isLight && (
+                <svg
+                  viewBox="0 0 1000 1000"
+                  preserveAspectRatio="none"
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-0 h-full w-full z-0 overflow-visible"
+                >
+                  <defs>
+                    <filter id="atlasBeamMist" x="-40%" y="-40%" width="180%" height="180%">
+                      <feGaussianBlur stdDeviation="11" />
+                    </filter>
+                    <filter id="atlasCoreGlow" x="-60%" y="-60%" width="220%" height="220%">
+                      <feGaussianBlur stdDeviation="16" />
+                    </filter>
+                    <linearGradient id="beamHeart" x1="777" y1="469" x2="685" y2="241" gradientUnits="userSpaceOnUse">
+                      <stop offset="0%" stopColor="#6ee7b7" stopOpacity="0.72" />
+                      <stop offset="55%" stopColor="#38bdf8" stopOpacity="0.38" />
+                      <stop offset="100%" stopColor="#38bdf8" stopOpacity="0.04" />
+                    </linearGradient>
+                    <linearGradient id="beamLungs" x1="777" y1="469" x2="896" y2="437" gradientUnits="userSpaceOnUse">
+                      <stop offset="0%" stopColor="#6ee7b7" stopOpacity="0.72" />
+                      <stop offset="55%" stopColor="#34d399" stopOpacity="0.38" />
+                      <stop offset="100%" stopColor="#38bdf8" stopOpacity="0.04" />
+                    </linearGradient>
+                    <linearGradient id="beamBrain" x1="777" y1="469" x2="750" y2="731" gradientUnits="userSpaceOnUse">
+                      <stop offset="0%" stopColor="#6ee7b7" stopOpacity="0.72" />
+                      <stop offset="55%" stopColor="#38bdf8" stopOpacity="0.38" />
+                      <stop offset="100%" stopColor="#38bdf8" stopOpacity="0.04" />
+                    </linearGradient>
+                  </defs>
+                  {/* Soft misty wide beams */}
+                  <line x1="777" y1="469" x2="685" y2="241" stroke="url(#beamHeart)" strokeWidth="18" strokeLinecap="round" filter="url(#atlasBeamMist)" />
+                  <line x1="777" y1="469" x2="896" y2="437" stroke="url(#beamLungs)" strokeWidth="18" strokeLinecap="round" filter="url(#atlasBeamMist)" />
+                  <line x1="777" y1="469" x2="750" y2="731" stroke="url(#beamBrain)" strokeWidth="18" strokeLinecap="round" filter="url(#atlasBeamMist)" />
+                  {/* Delicate luminous inner core rays */}
+                  <line x1="777" y1="469" x2="685" y2="241" stroke="url(#beamHeart)" strokeWidth="3.5" strokeLinecap="round" opacity="0.75" />
+                  <line x1="777" y1="469" x2="896" y2="437" stroke="url(#beamLungs)" strokeWidth="3.5" strokeLinecap="round" opacity="0.75" />
+                  <line x1="777" y1="469" x2="750" y2="731" stroke="url(#beamBrain)" strokeWidth="3.5" strokeLinecap="round" opacity="0.75" />
+                  {/* Misty glowing center origin point */}
+                  <circle cx="777" cy="469" r="24" fill="#6ee7b7" opacity="0.32" filter="url(#atlasCoreGlow)" />
+                  <circle cx="777" cy="469" r="5" fill="#ecfdf5" opacity="0.88" />
+                </svg>
+              )}
+              <img
+                src="/hero-atlas.png?v=4"
+                alt="Code Blue 3D Anatomy Atlas"
+                draggable={false}
+                className={`relative z-10 block w-full h-auto max-h-[70vh] object-contain select-none pointer-events-none ${isLight ? "drop-shadow-[0_0_18px_rgba(255,255,255,0.65)]" : ""}`}
+              />
+            </div>
           </div>
         </div>
       </main>
