@@ -10,7 +10,7 @@ import {
   ChevronRight,
   Layers,
   Moon,
-  Rotate3D,
+  Compass,
   Sun,
 } from "lucide-react";
 import { useAtlasLocale } from "@/lib/atlasI18n";
@@ -259,7 +259,7 @@ export default function StandaloneAtlasPage() {
                   className={`group select-none cursor-default rounded-bl-[64px] rounded-tl-xl rounded-br-xl rounded-tr-md border backdrop-blur-xl px-4 py-3.5 pl-6 flex flex-col items-center justify-center text-center transition-all duration-300 hover:translate-y-1 hover:scale-[1.03] hover:border-amber-400/60 hover:shadow-[0_18px_36px_rgba(245,158,11,0.22)] ${petalBase}`}
                 >
                   <div className="w-9 h-9 mb-1.5 rounded-2xl bg-amber-500/15 border border-amber-400/35 flex items-center justify-center text-amber-400 group-hover:scale-110 transition-transform duration-300">
-                    <Rotate3D className="w-5 h-5" />
+                    <Compass className="w-5 h-5" />
                   </div>
                   <div className="font-extrabold text-xs sm:text-[13px] leading-snug">
                     {isAr ? "تدوير وتكبير 360°" : "360° Orbit & Views"}
