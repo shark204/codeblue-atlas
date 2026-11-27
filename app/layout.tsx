@@ -5,8 +5,31 @@ import "./glass-theme.css";
 import SkyBackground from "@/components/SkyBackground";
 
 export const metadata: Metadata = {
-  title: "codeblue-atlas",
-  description: "Standalone interactive 3D Human Anatomy Atlas & 3D Organs Atelier.",
+  metadataBase: new URL("https://codeblue-atlas.vercel.app"),
+  title: "Code Blue — 3D Atlas",
+  description: "Interactive 3D Human Anatomy Atlas & Organs Dissection Atelier.",
+  openGraph: {
+    title: "Code Blue — 3D Atlas",
+    description: "Interactive 3D Human Anatomy Atlas & Organs Dissection Atelier.",
+    url: "https://codeblue-atlas.vercel.app",
+    siteName: "Code Blue — 3D Atlas",
+    type: "website",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Code Blue — Interactive 3D Human Anatomy & Organs Atelier",
+        type: "image/jpeg",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Code Blue — 3D Atlas",
+    description: "Interactive 3D Human Anatomy Atlas & Organs Dissection Atelier.",
+    images: ["/og-image.jpg"],
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
